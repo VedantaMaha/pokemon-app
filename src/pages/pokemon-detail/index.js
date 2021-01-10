@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { POKEMON_DETAIL } from '../../graphql-queries/pokemon-detail';
@@ -130,6 +131,11 @@ function PokemonDetail() {
     return <PokemonLoading />;
   }
 
+  const catchPokemon = () => {
+    const isPokemonCaught = Math.random() >= 0.5;
+    console.log(isPokemonCaught ? 'pokemon get!' : 'pokemon run away :(');
+  }
+
   return (
     <div className={container}>
       <div className={imageContainer}>
@@ -142,10 +148,10 @@ function PokemonDetail() {
         <p className={infoTitle}>Type:</p>
         {data?.pokemon?.types?.map(({type}, typeIdx) => {
           return (
-            <>
+            <React.Fragment key={type?.name}>
             <span className={infoData}>{type?.name}</span>
             {(typeIdx !== data?.pokemon?.types?.length - 1) ? <span className={infoData}> / </span> : <span></span>}
-            </>
+            </React.Fragment>
           )
         })}
       </div>
@@ -154,7 +160,7 @@ function PokemonDetail() {
         <div className={statsContainer}>
           {data?.pokemon?.stats?.map(stat => {
             return (
-              <div className={statsData}>{stat?.stat?.name}: {stat?.base_stat}</div>
+              <div key={stat?.stat?.name} className={statsData}>{stat?.stat?.name}: {stat?.base_stat}</div>
             )
           })}
         </div>
@@ -164,13 +170,13 @@ function PokemonDetail() {
         <div className={statsContainer}>
           {data?.pokemon?.moves?.map(({move}) => {
             return (
-              <div className={statsData}>{move?.name}</div>
+              <div key={move?.name} className={statsData}>{move?.name}</div>
             )
           })}
         </div>
       </div>
 
-      <div className={catchBtnContainer}>
+      <div className={catchBtnContainer} onClick={() => catchPokemon()}>
         <img
           className={css`
             width: 40px;
@@ -180,6 +186,7 @@ function PokemonDetail() {
             transform-origin: center bottom;
           `}
           src={pokeball}
+          alt="Catch Pokemon"
         />
         <div className={infoData}>Catch!</div>
       </div>

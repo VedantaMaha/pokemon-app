@@ -39,6 +39,7 @@ function PokemonLoading() {
           transform-origin: center bottom;
         `}
         src={pokeball}
+        alt="Loading..."
       />
     </div>
   )
