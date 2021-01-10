@@ -1,4 +1,3 @@
-import './App.css';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient } from '@apollo/client';
 import React, { lazy, Suspense } from 'react';
