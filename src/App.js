@@ -6,6 +6,7 @@ import { BrowserRouter as  Router, Route, Switch } from 'react-router-dom';
 import PokemonLoading from './components/pokemon-loading';
 import { inMemoryCache } from './cache';
 import AppContextProvider from './context/app.context';
+import Header from './components/header';
 
 const client = new ApolloClient({
   uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
@@ -19,6 +20,7 @@ function App() {
     <ApolloProvider client={client}>
       <AppContextProvider>
         <Router>
+          <Header/>
           <Suspense fallback={<PokemonLoading />}>
             <Switch>
               <Route exact path="/" component={PokemonList} />
