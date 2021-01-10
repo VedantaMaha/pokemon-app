@@ -6,10 +6,10 @@ import { css, keyframes } from '@emotion/css';
 import pokeball from '../../assets/pokeball.png'
 
 const container = css({
-  margin: '1rem',
+  margin: '2rem 1rem',
   '@media (min-width: 960px)': {
     width: '60%',
-    margin: 'auto'
+    margin: '2rem auto'
   },
   '@media (max-width: 960px)': {
     marginBottom: '15rem'
