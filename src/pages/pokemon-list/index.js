@@ -22,12 +22,13 @@ const cardContainer = css({
 
 const buttonContainer = css({
   display: 'flex',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  margin: '2rem',
 })
 
 const button = css({
+  cursor: 'pointer',
   padding: '1rem 2rem',
-  margin: '2rem',
   backgroundColor: '#3f51b5',
   borderRadius: '2rem',
   color: '#ffffff',
