@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient } from '@apollo/client';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as  Router, Route, Switch } from 'react-router-dom';
+import PokemonLoading from './components/pokemon-loading';
+import { inMemoryCache } from './cache';
+import AppContextProvider from './context/app.context';
+
+const client = new ApolloClient({
+  uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
+  cache: inMemoryCache
+});
+
+const PokemonList = lazy(() => import(/* webpackChunkName: "pokemon-list" */ './pages/pokemon-list'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <AppContextProvider>
+        <Router>
+          <Suspense fallback={<PokemonLoading />}>
+            <Switch>
+              <Route exact path="/" component={PokemonList} />
+            </Switch>
+          </Suspense>
+        </Router>
+      </AppContextProvider>
+    </ApolloProvider>
   );
 }
 
