@@ -77,7 +77,7 @@ function Header() {
     <nav className={navDesktop}>
       <div className={navDesktopContainer}>
         <NavLink to="/">
-          <img src={pokemonLogo} className={logo} />
+          <img src={pokemonLogo} alt="pokemon logo" className={logo} />
         </NavLink>
         <ul className={menuList}>
           <li className={css`width: 200px`}>
