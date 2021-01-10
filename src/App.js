@@ -13,6 +13,7 @@ const client = new ApolloClient({
 });
 
 const PokemonList = lazy(() => import(/* webpackChunkName: "pokemon-list" */ './pages/pokemon-list'));
+const PokemonDetail = lazy(() => import(/* webpackChunkName: "pokemon-detail" */ './pages/pokemon-detail'));
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Suspense fallback={<PokemonLoading />}>
             <Switch>
               <Route exact path="/" component={PokemonList} />
+              <Route exact path="/detail/:pokemonName" component={PokemonDetail} />
             </Switch>
           </Suspense>
         </Router>

@@ -1,6 +1,14 @@
 import pokeball from '../assets/pokeball.png'
 import { css, keyframes } from '@emotion/css'
 
+const loadingContainer = css({
+  width: '100%',
+  height: '200px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+})
+
 const bounce = keyframes`
   from, 20%, 53%, 80%, to {
     transform: translate3d(0,0,0);
@@ -21,16 +29,18 @@ const bounce = keyframes`
 
 function PokemonLoading() {
   return (
-    <img
-      className={css`
-        width: 96px;
-        height: 96px;
-        border-radius: 50%;
-        animation: ${bounce} 1s ease infinite;
-        transform-origin: center bottom;
-      `}
-      src={pokeball}
-    />
+    <div className={loadingContainer}>
+      <img
+        className={css`
+          width: 96px;
+          height: 96px;
+          border-radius: 50%;
+          animation: ${bounce} 1s ease infinite;
+          transform-origin: center bottom;
+        `}
+        src={pokeball}
+      />
+    </div>
   )
 }
 

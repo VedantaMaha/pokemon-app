@@ -57,6 +57,10 @@ const ownedText = css({
   }
 })
 
+const clickable = css({
+  cursor: 'pointer'
+})
+
 function PokemonCard({ pokemon }) {
   const history = useHistory();
 
@@ -66,7 +70,7 @@ function PokemonCard({ pokemon }) {
 
   return (
     <div className={cardContainer}>
-      <div onClick={() => openPokemonDetail(pokemon.name)}>
+      <div className={clickable} onClick={() => openPokemonDetail(pokemon.name)}>
         <img src={pokemon?.image} alt={pokemon?.name} className={cardImage} />
         <div className={cardTitle}>{pokemon?.name}</div>
       </div>
