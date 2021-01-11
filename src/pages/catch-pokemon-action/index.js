@@ -70,9 +70,14 @@ const nameInput = css({
   boxShadow: '0 1px 6px 0 rgba(49,53,59,.12)'
 })
 
+const errorMessage = css({
+  color: 'red',
+  margin: '1rem auto',
+  textAlign: 'center'
+})
+
 function CatchPokemonAction() {
   const history = useHistory();
-
   const appContext = useContext(AppContext);
 
   const [isPokemonCaught, setIsPokemonCaught] = useState(null);
@@ -83,15 +88,31 @@ function CatchPokemonAction() {
     setIsPokemonCaught(Math.random() >= 0.5);
   }, []);
 
+  const [isNameTaken, setIsNameTaken] = useState(false);
   const setPokemonName = (pokemonName) => {
-    appContext.setSelectedPokemon({
-      ...appContext.selectedPokemon,
-      name: pokemonName
-    })
+    const sameNamedPokemonFound = appContext.myPokemonList.find(pokemon => pokemon.name === pokemonName);
+    if (sameNamedPokemonFound) {
+      setIsNameTaken(true);
+    } else {
+      appContext.setSelectedPokemon({
+        ...appContext.selectedPokemon,
+        name: pokemonName
+      })
+      setIsNameTaken(false);
+    }
   }
 
   const goHome = () => {
     history.push('/');
+  }
+
+  const goToPokemonDetail = () => {
+    if (!isNameTaken) {
+      appContext.setMyPokemonList([...appContext.myPokemonList, appContext.selectedPokemon]);
+      history.push('/my-pokemon-list/detail');
+    } else {
+      history.push('/');
+    }
   }
   
   return (
@@ -110,7 +131,8 @@ function CatchPokemonAction() {
             value={appContext?.selectedPokemon?.name}
             onChange={(e) => setPokemonName(e.target.value)}
           />
-          <div className={actionBtn}>
+          { isNameTaken ? <p className={errorMessage}>Pokemon name already taken.</p> : ''}
+          <div className={actionBtn} onClick={() => goToPokemonDetail()}>
             <img className={btnIcon} src={arrowRight} alt="go to pokemon detail page"/>
           </div>
         </>
@@ -121,8 +143,8 @@ function CatchPokemonAction() {
           </div>
           <p className={headerTxt}>Ohh nooo!!</p>
           <p className={infoTxt}>{appContext?.selectedPokemon?.name} is running awayy...</p>
-          <div className={actionBtn}>
-            <img className={btnIcon} src={arrowLeft} alt="go to home page" onClick={() => goHome()} />
+          <div className={actionBtn} onClick={() => goHome()}>
+            <img className={btnIcon} src={arrowLeft} alt="go to home page" />
           </div>
         </>
       }
