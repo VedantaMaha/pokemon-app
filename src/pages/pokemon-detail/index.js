@@ -99,7 +99,7 @@ const catchBtnContainer = css({
   borderRadius: '5rem',
   width: '65px',
   height: '65px',
-  backgroundColor: 'rgb(255 229 163)',
+  backgroundColor: '#FFC107',
   textAlign: 'center',
   fontWeight: '700',
   boxShadow: '2px 2px 6px -1px rgba(0,0,0,0.25)',

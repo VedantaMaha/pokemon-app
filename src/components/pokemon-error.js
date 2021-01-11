@@ -14,7 +14,8 @@ const infoText = css({
   fontWeight: '700',
   fontSize: '2rem',
   color: 'rgba(0,0,0,.87)',
-  margin: '1rem'
+  margin: '1rem',
+  textAlign: 'center'
 })
 
 function PokemonError() {

@@ -67,7 +67,7 @@ const menuItem = css({
 })
 
 const activeNav = css({
-  color: 'rgb(225, 170, 29)'
+  color: '#FFC107'
 })
 
 function Header() {
