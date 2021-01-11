@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { POKEMON_DETAIL } from '../../graphql-queries/pokemon-detail';
 import PokemonLoading from '../../components/pokemon-loading';
+import PokemonError from '../../components/pokemon-error';
 import { css, keyframes } from '@emotion/css';
 import pokeball from '../../assets/pokeball.png'
+import { AppContext } from '../../context/app.context';
+import { useHistory } from 'react-router-dom';
 
 const container = css({
   margin: '2rem 1rem',
@@ -88,6 +91,7 @@ const statsData = css({
 })
 
 const catchBtnContainer = css({
+  cursor: 'pointer',
   position: 'fixed',
   right: '5vmin',
   bottom: '25vmin',
@@ -118,6 +122,8 @@ const bounce = keyframes`
 
 function PokemonDetail() {
   const { pokemonName } = useParams();
+  const history = useHistory();
+  const appContext = useContext(AppContext);
 
   const { loading, error, data } = useQuery(POKEMON_DETAIL, {
     variables: { name: pokemonName }
@@ -128,12 +134,12 @@ function PokemonDetail() {
   }
 
   if (error) {
-    return <PokemonLoading />;
+    return <PokemonError />;
   }
 
   const catchPokemon = () => {
-    const isPokemonCaught = Math.random() >= 0.5;
-    console.log(isPokemonCaught ? 'pokemon get!' : 'pokemon run away :(');
+    appContext.setSelectedPokemon(data.pokemon);
+    history.push('/catch-pokemon');
   }
 
   return (

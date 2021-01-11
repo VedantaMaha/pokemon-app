@@ -6,6 +6,7 @@ import PokemonLoading from './components/pokemon-loading';
 import { inMemoryCache } from './cache';
 import AppContextProvider from './context/app.context';
 import Header from './components/header';
+import { Redirect } from 'react-router-dom';
 
 const client = new ApolloClient({
   uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
@@ -14,6 +15,9 @@ const client = new ApolloClient({
 
 const PokemonList = lazy(() => import(/* webpackChunkName: "pokemon-list" */ './pages/pokemon-list'));
 const PokemonDetail = lazy(() => import(/* webpackChunkName: "pokemon-detail" */ './pages/pokemon-detail'));
+const MyPokemonList = lazy(() => import(/* webpackChunkName: "my-pokemon-list" */ './pages/my-pokemon-list'));
+const MyPokemonDetail = lazy(() => import(/* webpackChunkName: "my-pokemon-list" */ './pages/my-pokemon-detail'));
+const CatchPokemonAction = lazy(() => import(/* webpackChunkName: "catch-pokemon-action" */ './pages/catch-pokemon-action'));
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
             <Switch>
               <Route exact path="/" component={PokemonList} />
               <Route exact path="/detail/:pokemonName" component={PokemonDetail} />
+              <Route exact path="/my-pokemon-list" component={MyPokemonList} />
+              <Route exact path="/my-pokemon-list/detail" component={MyPokemonDetail} />
+              <Route exact path="/catch-pokemon" component={CatchPokemonAction} />
+              <Route render={() => <Redirect to={{pathname: "/"}} />} />
             </Switch>
           </Suspense>
         </Router>

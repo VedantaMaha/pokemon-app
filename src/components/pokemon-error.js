@@ -1,5 +1,5 @@
 import pokemonSad from '../assets/pokemon-error.png'
-import { css, keyframes } from '@emotion/css'
+import { css } from '@emotion/css'
 
 const loadingContainer = css({
   width: '100%',
@@ -7,7 +7,7 @@ const loadingContainer = css({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  flexFlow: 'column'
+  flexDirection: 'column'
 })
 
 const infoText = css({
