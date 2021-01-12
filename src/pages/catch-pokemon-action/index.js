@@ -90,14 +90,14 @@ function CatchPokemonAction() {
 
   const [isNameTaken, setIsNameTaken] = useState(false);
   const setPokemonName = (pokemonName) => {
+    appContext.setSelectedPokemon({
+      ...appContext.selectedPokemon,
+      name: pokemonName
+    })
     const sameNamedPokemonFound = appContext.myPokemonList.find(pokemon => pokemon.name === pokemonName);
     if (sameNamedPokemonFound) {
       setIsNameTaken(true);
     } else {
-      appContext.setSelectedPokemon({
-        ...appContext.selectedPokemon,
-        name: pokemonName
-      })
       setIsNameTaken(false);
     }
   }
@@ -110,8 +110,6 @@ function CatchPokemonAction() {
     if (!isNameTaken) {
       appContext.setMyPokemonList([...appContext.myPokemonList, appContext.selectedPokemon]);
       history.push('/my-pokemon-list/detail');
-    } else {
-      history.push('/');
     }
   }
   
