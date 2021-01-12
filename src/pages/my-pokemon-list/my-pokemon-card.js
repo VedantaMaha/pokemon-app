@@ -83,8 +83,9 @@ function MyPokemonCard({ pokemon }) {
   }
 
   const releasePokemon = (pokemonName) => {
-    const pokemonRemaining = appContext.myPokemonList.filter(pokemon => pokemon.name !== pokemonName);
-    appContext.setMyPokemonList(pokemonRemaining);
+    const pokemonsRemaining = appContext.myPokemonList.filter(pokemon => pokemon.name !== pokemonName);
+    appContext.setMyPokemonList(pokemonsRemaining);
+    history.push('/release-pokemon');
   }
 
   return (

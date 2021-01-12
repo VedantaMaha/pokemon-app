@@ -67,10 +67,7 @@ const infoTitle = css({
 
 const infoData = css({
   textTransform: 'capitalize',
-  fontSize: '23px',
-  '@media (max-width: 960px)': {
-    fontSize: '20px',
-  }
+  fontSize: '18px',
 })
 
 const statsContainer = css({
@@ -164,7 +161,7 @@ function PokemonDetail() {
     const pokemonsRemaining = appContext.myPokemonList.filter(myPokemon => myPokemon.name !== pokemon.name);
     appContext.setMyPokemonList(pokemonsRemaining);
     appContext.setSelectedPokemon(null);
-    history.push('/');
+    history.push('/release-pokemon');
   }
 
   return (

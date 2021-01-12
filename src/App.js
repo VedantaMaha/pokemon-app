@@ -17,6 +17,7 @@ const PokemonList = lazy(() => import(/* webpackChunkName: "pokemon-list" */ './
 const PokemonDetail = lazy(() => import(/* webpackChunkName: "pokemon-detail" */ './pages/pokemon-detail'));
 const MyPokemonList = lazy(() => import(/* webpackChunkName: "my-pokemon-list" */ './pages/my-pokemon-list'));
 const CatchPokemonAction = lazy(() => import(/* webpackChunkName: "catch-pokemon-action" */ './pages/catch-pokemon-action'));
+const ReleasePokemonAction = lazy(() => import(/* webpackChunkName: "release-pokemon-action" */ './pages/release-pokemon-action'));
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route exact path="/my-pokemon-list" component={MyPokemonList} />
               <Route exact path="/my-pokemon-list/detail" component={PokemonDetail} />
               <Route exact path="/catch-pokemon" component={CatchPokemonAction} />
+              <Route exact path="/release-pokemon" component={ReleasePokemonAction} />
               <Route render={() => <Redirect to={{pathname: "/"}} />} />
             </Switch>
           </Suspense>
