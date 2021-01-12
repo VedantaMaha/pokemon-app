@@ -82,12 +82,12 @@ const clickable = css({
 
 function PokemonCard({ pokemon }) {
   const history = useHistory();
-  const [ownedCount, setOwnedCount] = useState(0);
+  const [ownedTotal, setOwnedTotal] = useState(0);
   const appContext = useContext(AppContext);
 
   useEffect(() => {
     const pokemonFounds = appContext.myPokemonList.filter(myPokemon => myPokemon.id === pokemon.id);
-    setOwnedCount(pokemonFounds ? pokemonFounds.length : 0);
+    setOwnedTotal(pokemonFounds ? pokemonFounds.length : 0);
     console.log('pokemonFounds ', pokemonFounds, appContext.myPokemonList);
   }, [appContext.myPokemonList])
 
@@ -101,7 +101,7 @@ function PokemonCard({ pokemon }) {
         <img src={pokemon?.image} alt={pokemon?.name} className={cardImage} />
         <div className={cardTitle}>{pokemon?.name}</div>
       </div>
-      <div className={ownedCount ? ownedText : notOwnText}>Owned: {ownedCount}</div>
+      <div className={ownedTotal ? ownedText : notOwnText}>Owned: {ownedTotal}</div>
     </div>
   )
 }
