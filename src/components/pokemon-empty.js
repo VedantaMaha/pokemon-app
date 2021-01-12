@@ -26,7 +26,7 @@ function PokemonEmpty() {
         className={css`
           height: 150px;
         `}
-        alt="Error occured"
+        alt="Pokemon empty"
       />
       <p className={infoText}>There are no pokemons here.. 😞</p>
     </div>
