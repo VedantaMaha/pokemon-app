@@ -5,6 +5,7 @@ import PokemonLoading from '../../components/pokemon-loading';
 import PokemonError from '../../components/pokemon-error';
 import PokemonCard from './pokemon-card';
 import { css } from '@emotion/css';
+import PokemonEmpty from '../../components/pokemon-empty';
 
 const container = css({
   margin: '1rem',
@@ -66,17 +67,22 @@ function PokemonList() {
   }
 
   return (
-    <div className={container}>
-      <div className={cardContainer}>
-        { data?.pokemons?.results.map(pokemon => <PokemonCard key={pokemon?.id} pokemon={pokemon} />) }
+    <>
+    { !data?.pokemons?.results?.length
+      ? <PokemonEmpty />
+      : <div className={container}>
+        <div className={cardContainer}>
+          { data?.pokemons?.results.map(pokemon => <PokemonCard key={pokemon?.id} pokemon={pokemon} />) }
+        </div>
+        <div className={buttonContainer}>
+          { isLoadingMore 
+            ? <PokemonLoading />
+            : <div className={button} onClick={() => loadMorePokemon()}>Load More</div>
+          }
+        </div>
       </div>
-      <div className={buttonContainer}>
-        { isLoadingMore 
-          ? <PokemonLoading />
-          : <div className={button} onClick={() => loadMorePokemon()}>Load More</div>
-        }
-      </div>
-    </div>
+    }
+    </>
   )
 }
 

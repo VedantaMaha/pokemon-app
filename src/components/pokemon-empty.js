@@ -28,7 +28,7 @@ function PokemonEmpty() {
         `}
         alt="Error occured"
       />
-      <p className={infoText}>You don't have any pokemon yet.</p>
+      <p className={infoText}>There are no pokemons here.. 😞</p>
     </div>
   )
 }
