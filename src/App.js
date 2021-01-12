@@ -16,7 +16,6 @@ const client = new ApolloClient({
 const PokemonList = lazy(() => import(/* webpackChunkName: "pokemon-list" */ './pages/pokemon-list'));
 const PokemonDetail = lazy(() => import(/* webpackChunkName: "pokemon-detail" */ './pages/pokemon-detail'));
 const MyPokemonList = lazy(() => import(/* webpackChunkName: "my-pokemon-list" */ './pages/my-pokemon-list'));
-const MyPokemonDetail = lazy(() => import(/* webpackChunkName: "my-pokemon-list" */ './pages/my-pokemon-detail'));
 const CatchPokemonAction = lazy(() => import(/* webpackChunkName: "catch-pokemon-action" */ './pages/catch-pokemon-action'));
 
 function App() {
