@@ -142,6 +142,7 @@ function PokemonDetail() {
       }
       setPokemon(appContext.selectedPokemon);
     }
+    // eslint-disable-next-line
   }, [])
 
   if (loading) {

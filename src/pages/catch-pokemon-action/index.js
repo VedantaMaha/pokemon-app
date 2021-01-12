@@ -86,6 +86,7 @@ function CatchPokemonAction() {
       history.push('/');
     }
     setIsPokemonCaught(Math.random() >= 0.5);
+    // eslint-disable-next-line
   }, []);
 
   const [isNameTaken, setIsNameTaken] = useState(false);
