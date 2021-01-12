@@ -30,7 +30,7 @@ function App() {
               <Route exact path="/" component={PokemonList} />
               <Route exact path="/detail/:pokemonName" component={PokemonDetail} />
               <Route exact path="/my-pokemon-list" component={MyPokemonList} />
-              <Route exact path="/my-pokemon-list/detail" component={MyPokemonDetail} />
+              <Route exact path="/my-pokemon-list/detail" component={PokemonDetail} />
               <Route exact path="/catch-pokemon" component={CatchPokemonAction} />
               <Route render={() => <Redirect to={{pathname: "/"}} />} />
             </Switch>

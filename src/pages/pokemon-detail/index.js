@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { POKEMON_DETAIL } from '../../graphql-queries/pokemon-detail';
 import PokemonLoading from '../../components/pokemon-loading';
 import PokemonError from '../../components/pokemon-error';
 import { css, keyframes } from '@emotion/css';
-import pokeball from '../../assets/pokeball.png'
+import pokeball from '../../assets/pokeball.png';
+import pokeballOpened from '../../assets/pokeball-open.png';
 import { AppContext } from '../../context/app.context';
 import { useHistory } from 'react-router-dom';
 
@@ -124,10 +125,27 @@ function PokemonDetail() {
   const { pokemonName } = useParams();
   const history = useHistory();
   const appContext = useContext(AppContext);
+  const location = useLocation();
+  const isInMyPokemonDetailPage = location.pathname.includes('/my-pokemon-list/detail');
+  const [pokemon, setPokemon] = useState(null);
 
   const { loading, error, data } = useQuery(POKEMON_DETAIL, {
-    variables: { name: pokemonName }
+    variables: { name: pokemonName },
+    skip: isInMyPokemonDetailPage,
+    onCompleted: () => {
+      setPokemon(data.pokemon);
+    }
   })
+
+  useEffect(() => {
+    if (isInMyPokemonDetailPage) {
+      if (!appContext.selectedPokemon) {
+        history.push('/');
+        return;
+      }
+      setPokemon(appContext.selectedPokemon);
+    }
+  }, [])
 
   if (loading) {
     return <PokemonLoading />;
@@ -138,25 +156,32 @@ function PokemonDetail() {
   }
 
   const catchPokemon = () => {
-    appContext.setSelectedPokemon(data.pokemon);
+    appContext.setSelectedPokemon(pokemon);
     history.push('/catch-pokemon');
+  }
+
+  const releasePokemon = () => {
+    const pokemonsRemaining = appContext.myPokemonList.filter(myPokemon => myPokemon.name !== pokemon.name);
+    appContext.setMyPokemonList(pokemonsRemaining);
+    appContext.setSelectedPokemon(null);
+    history.push('/');
   }
 
   return (
     <div className={container}>
       <div className={imageContainer}>
-        <img src={data?.pokemon?.sprites?.front_default} alt={data?.pokemon?.name} className={image} />
+        <img src={pokemon?.sprites?.front_default} alt={pokemon?.name} className={image} />
       </div>
       <div className={nameContainer}>
-        <p className={pokemonNameText}>{data?.pokemon?.name}</p>
+        <p className={pokemonNameText}>{pokemon?.name}</p>
       </div>
       <div className={infoContainer}>
         <p className={infoTitle}>Type:</p>
-        {data?.pokemon?.types?.map(({type}, typeIdx) => {
+        {pokemon?.types?.map(({type}, typeIdx) => {
           return (
             <React.Fragment key={type?.name}>
             <span className={infoData}>{type?.name}</span>
-            {(typeIdx !== data?.pokemon?.types?.length - 1) ? <span className={infoData}> / </span> : <span></span>}
+            {(typeIdx !== pokemon?.types?.length - 1) ? <span className={infoData}> / </span> : <span></span>}
             </React.Fragment>
           )
         })}
@@ -164,7 +189,7 @@ function PokemonDetail() {
       <div className={infoContainer}>
         <p className={infoTitle}>Stats:</p>
         <div className={statsContainer}>
-          {data?.pokemon?.stats?.map(stat => {
+          {pokemon?.stats?.map(stat => {
             return (
               <div key={stat?.stat?.name} className={statsData}>{stat?.stat?.name}: {stat?.base_stat}</div>
             )
@@ -174,7 +199,7 @@ function PokemonDetail() {
       <div className={infoContainer}>
         <p className={infoTitle}>Moves:</p>
         <div className={statsContainer}>
-          {data?.pokemon?.moves?.map(({move}) => {
+          {pokemon?.moves?.map(({move}) => {
             return (
               <div key={move?.name} className={statsData}>{move?.name}</div>
             )
@@ -182,7 +207,7 @@ function PokemonDetail() {
         </div>
       </div>
 
-      <div className={catchBtnContainer} onClick={() => catchPokemon()}>
+      <div className={catchBtnContainer} onClick={() => isInMyPokemonDetailPage ? releasePokemon() : catchPokemon()}>
         <img
           className={css`
             width: 40px;
@@ -191,10 +216,10 @@ function PokemonDetail() {
             animation: ${bounce} 1s ease infinite;
             transform-origin: center bottom;
           `}
-          src={pokeball}
+          src={isInMyPokemonDetailPage ? pokeballOpened : pokeball}
           alt="Catch Pokemon"
         />
-        <div className={infoData}>Catch!</div>
+        <div className={infoData}>{isInMyPokemonDetailPage ? 'Release' : 'Catch!'}</div>
       </div>
     </div>
   )

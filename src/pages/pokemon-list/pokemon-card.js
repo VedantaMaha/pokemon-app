@@ -88,8 +88,7 @@ function PokemonCard({ pokemon }) {
   useEffect(() => {
     const pokemonFounds = appContext.myPokemonList.filter(myPokemon => myPokemon.id === pokemon.id);
     setOwnedTotal(pokemonFounds ? pokemonFounds.length : 0);
-    console.log('pokemonFounds ', pokemonFounds, appContext.myPokemonList);
-  }, [appContext.myPokemonList])
+  }, [appContext.myPokemonList, pokemon.id])
 
   const openPokemonDetail = (pokemonName) => {
     history.push(`/detail/${pokemonName}`);
