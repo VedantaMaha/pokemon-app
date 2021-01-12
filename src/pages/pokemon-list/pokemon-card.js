@@ -1,5 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { css } from '@emotion/css';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../../context/app.context';
 
 const cardContainer = css({
   height: 'auto',
@@ -40,11 +42,28 @@ const cardTitle = css({
   }
 })
 
-const ownedText = css({
+const notOwnText = css({
   backgroundColor: '#e0e0e0',
   textAlign: 'center',
   borderRadius: '1rem',
   color: 'rgba(0,0,0,.87)',
+  fontWeight: '700',
+  fontSize: '14px',
+  padding: '8px',
+  marginTop: '16px',
+  // mobile view
+  '@media (max-width: 960px)': {
+    fontSize: '9px',
+    padding: '8px',
+    marginTop: '8px',
+  }
+})
+
+const ownedText = css({
+  backgroundColor: 'rgb(3, 172, 14)',
+  textAlign: 'center',
+  borderRadius: '1rem',
+  color: '#ffffff',
   fontWeight: '700',
   fontSize: '14px',
   padding: '8px',
@@ -63,6 +82,14 @@ const clickable = css({
 
 function PokemonCard({ pokemon }) {
   const history = useHistory();
+  const [ownedCount, setOwnedCount] = useState(0);
+  const appContext = useContext(AppContext);
+
+  useEffect(() => {
+    const pokemonFounds = appContext.myPokemonList.filter(myPokemon => myPokemon.id === pokemon.id);
+    setOwnedCount(pokemonFounds ? pokemonFounds.length : 0);
+    console.log('pokemonFounds ', pokemonFounds, appContext.myPokemonList);
+  }, [appContext.myPokemonList])
 
   const openPokemonDetail = (pokemonName) => {
     history.push(`/detail/${pokemonName}`);
@@ -74,7 +101,7 @@ function PokemonCard({ pokemon }) {
         <img src={pokemon?.image} alt={pokemon?.name} className={cardImage} />
         <div className={cardTitle}>{pokemon?.name}</div>
       </div>
-      <div className={ownedText}>Owned: {0}</div>
+      <div className={ownedCount ? ownedText : notOwnText}>Owned: {ownedCount}</div>
     </div>
   )
 }

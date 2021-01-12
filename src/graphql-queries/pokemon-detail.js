@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const POKEMON_DETAIL = gql`
   query GetPokemonDetail($name: String!) {
     pokemon(name: $name) {
+      id
       name
       types {
         type {
