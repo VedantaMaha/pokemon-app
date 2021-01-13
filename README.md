@@ -1,5 +1,7 @@
 # Project Assignment - Web Platform Engineers - Tokopedia
-Deployed web-app url: https://pokemon-app-oxdc9bgqy.vercel.app/
+Deployed web-app url: https://pokemon-app-zeta.vercel.app/
+
+
 
 # Getting Started with Create React App
 
